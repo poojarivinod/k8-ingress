@@ -34,4 +34,29 @@ spec:
   - protocol: TCP
     port: 80 # service port
     targetPort: 80 # target container port
-    
+---
+# search as kubernetes --> click on kubernetes--> search as ingress 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations: #label are used for internal resources, annotations are used for external resources,here alb is external resource. so, we use the annotations to connect ingress to alb.
+    alb.ingress.kubernetes.io/scheme: internet-facing # search as eks ingress controller --> click on github.io --> guide --> select the internet facing annotation.because we connect public load balancer
+    alb.ingress.kubernetes.io/target-type: ip # target group instance are ip based
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:695862934667:certificate/f3aadbcd-bf01-4eb5-b261-7fbf9355cb5e
+    alb.ingress.kubernetes.io/group.name: joindevops
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "app1.poojari.store" # when user hit this url with / --> send the traffic to app1 service on port number 80
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app1 # send the traffic to app1
+            port:
+              number: 80
+ 

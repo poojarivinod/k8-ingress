@@ -39,7 +39,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: app1
   annotations: #label are used for internal resources, annotations are used for external resources,here alb is external resource. so, we use the annotations to connect ingress to alb.
     alb.ingress.kubernetes.io/scheme: internet-facing # search as eks ingress controller --> click on github.io --> guide --> select the internet facing annotation.because we connect public load balancer
     alb.ingress.kubernetes.io/target-type: ip # target group instance are ip based

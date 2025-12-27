@@ -45,7 +45,7 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip # target group instance are ip based
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:695862934667:certificate/f3aadbcd-bf01-4eb5-b261-7fbf9355cb5e
-    alb.ingress.kubernetes.io/group.name: joindevops
+    alb.ingress.kubernetes.io/group.name: joindevops # first time ingress will create load balancer and group with the name joindevops for app1. During app2, ingress will check joindevops group exist or not in manifest file, if exist,then won't create load balancer.it just add rule(app2.poojari.store) to listener.If joindevops group not exist, then create new load balancer. 
 spec:
   ingressClassName: alb
   rules:
